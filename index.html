@@ -9,12 +9,9 @@
 
     <div id="app">
         <h1 v-showv  ="status">{{ titulo }}</h1>
-        <div v-if="usuario.id == 1">
-            Id: {{usuario.id}}, <br>
-            Nome: {{usuario.nome}}, <br>
-            Profissão: {{usuario.profissao}}
-        </div>
-        <div v-else>Nenhum usuário com ID 1</div>
+        <ul>
+            <li v-for="(item, index) in linguagens">{{index}} - {{item.nome}} <br></li>
+        </ul>
     </div>
 
     
@@ -25,11 +22,13 @@
             el: "#app",
             data: {
                 titulo: "Aula 01 - VueJS",
-                usuario: {
-                    id: 1,
-                    nome: "John Snow",
-                    profissao: "Ator"
-                }
+                linguagens: [
+                    { nome: "Javascript" },
+                    { nome: "PHP" },
+                    { nome: "C#" },
+                    { nome: "Java" },
+                    { nome: "Python" }
+                ]
             }
         });
     </script>
