@@ -8,10 +8,36 @@
 <body>
 
     <div id="app">
-        <h1 v-showv  ="status">{{ titulo }}</h1>
-        <ul>
-            <li v-for="(item, index) in linguagens">{{index}} - {{item.nome}} <br></li>
-        </ul>
+        <h1 v-show  ="status">{{ titulo }}</h1>
+        <label for="">Informe seu nome</label>
+        <input type="text" v-model="nome"> {{nome}}
+
+        <br><br>
+        <label for="">Deseja receber informações por e-mail?</label>
+        <input type="radio" value="sim" v-model="info"> Sim
+        <input type="radio" value="nao" v-model="info"> Não
+
+        <br><br>
+        <label for="">Seus interesses</label>
+        <input type="checkbox" value="vasco" v-model="interesses"> Vasco
+        <input type="checkbox" value="formula-1" v-model="interesses"> Fórmula 1
+        <input type="checkbox" value="corrida" v-model="interesses"> corrida
+
+        <br><br>
+        <label for="">Como nos conheceu?</label>
+        <select v-model="conheceu">
+            <option value="">Escolha</option>
+            <option value="google">Google</option>
+            <option value="fodase">Foda-se</option>
+        </select>
+
+        <br><br>
+        Nome: {{nome}} <br>
+        Informações: {{info}} <br>
+        Interesses: {{interesses}} <br>
+        Conheceu: {{conheceu}}
+
+
     </div>
 
     
@@ -22,13 +48,11 @@
             el: "#app",
             data: {
                 titulo: "Aula 01 - VueJS",
-                linguagens: [
-                    { nome: "Javascript" },
-                    { nome: "PHP" },
-                    { nome: "C#" },
-                    { nome: "Java" },
-                    { nome: "Python" }
-                ]
+                nome: "",
+                info: "",
+                interesses: new Array(),
+                conheceu: ""
+
             }
         });
     </script>
