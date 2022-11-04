@@ -13,9 +13,9 @@
     <div id="app">
         <h1>{{ titulo }}</h1>
 
-        <form action="www.google.com">
-            <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">Enviar</button>
-        </form>
+        <ul>
+            <li v-for="user in users">{{ user.nome | toUpperCase() }}</li>
+        </ul>
     </div>
 
     
@@ -26,7 +26,18 @@
             el: "#app",
             data: {
                 titulo: "Aula 01 - VueJS",
+                users: [
+                    { nome: "Jon Snow "},
+                    { nome: "Tyrion Lannister" },
+                    { nome: "Daenerys Targaryen" }
+                ]
 
+            },
+
+            filters: {
+                toUpperCase(str) {
+                    return str.toUpperCase();
+                }
             },
 
             methods: {
