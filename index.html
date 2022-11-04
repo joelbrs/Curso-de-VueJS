@@ -12,9 +12,10 @@
 
     <div id="app">
         <h1>{{ titulo }}</h1>
-        
-        <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">ENVIAR</button>
-        <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">LIMPAR</button>
+
+        <form action="www.google.com">
+            <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">Enviar</button>
+        </form>
     </div>
 
     
@@ -25,22 +26,12 @@
             el: "#app",
             data: {
                 titulo: "Aula 01 - VueJS",
-                btnClassLimpar: {
-                    "btn-danger": true,
-                    "btn-sm": true
-                },
 
-                //btnClassEnviar: "btn-primary btn-lg"
-                btnClassEnviar: [
-                    "btn-primary", { "btn-lg": false }
-                ],
+            },
 
-                btnStyleEnviar: [
-                    { "font-size": "50px" },
-                    { "text-transform": "lowercase" }
-                ],
-                btnStyleLimpar: {
-                    "font-size": "10px"
+            methods: {
+                enviar() {
+                    alert("Enviado!");
                 }
             }
         });
