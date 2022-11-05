@@ -13,51 +13,26 @@
 
     <div id="app">
         <h1>{{ titulo }}</h1>
+        <menu-bar></menu-bar>
     </div>
+
+    <template id="menu">
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+        </ul>
+    </template>
+
 
     
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     
     <script>
+        Vue.component('menu-bar', {
+            template: "#menu"
+        })
         var app = new Vue({
             el: "#app",
-            
-            beforeCreate() {
-                console.log("beforeCreate");
-                console.log("Título: ", this.titulo);
-                console.log("DOM: ", this.$el);
-
-            },
-            created() {
-                console.log("created");
-                console.log("Título: ", this.titulo);
-                console.log("DOM: ", this.$el);
-
-            },
-            beforeMount() {
-                console.log("beforeMount");
-                console.log("Título: ", this.titulo);
-                console.log("DOM: ", this.$el);
-
-            },
-            mounted() {
-                console.log("mounted");
-                console.log("Título: ", this.titulo);
-                console.log("DOM: ", this.$el);
-
-            },
-            beforeUpdate() {
-                console.log("beforeUpdate");
-                console.log("Título: ", this.titulo);
-                console.log("DOM: ", this.$el);
-
-            },
-            updated() {
-                console.log("updated");
-                console.log("Título: ", this.titulo);
-                console.log("DOM: ", this.$el);
-
-            },
             
             data: {
                 titulo: "Aulas - VueJS",
