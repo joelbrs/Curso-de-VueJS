@@ -6,16 +6,15 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     
-    <title>Aula 01 - VueJS</title>
+    <title>Aulas - VueJS</title>
+
 </head>
 <body>
 
     <div id="app">
         <h1>{{ titulo }}</h1>
+        {{ fullName }}
 
-        <ul>
-            <li v-for="user in users">{{ user.nome | toUpperCase() }}</li>
-        </ul>
     </div>
 
     
@@ -25,24 +24,29 @@
         var app = new Vue({
             el: "#app",
             data: {
-                titulo: "Aula 01 - VueJS",
-                users: [
-                    { nome: "Jon Snow "},
-                    { nome: "Tyrion Lannister" },
-                    { nome: "Daenerys Targaryen" }
-                ]
-
+                titulo: "Aulas - VueJS",
+                firstName: "",
+                lastName: "",
             },
 
-            filters: {
-                toUpperCase(str) {
-                    return str.toUpperCase();
+            computed: {
+                fullName() {
+                    return this.firstName + " " + this.lastName;
+                }
+            },
+
+            watch: {
+                firstName() {
+                    this.updateUser();
+                },
+                lastName() {
+                    this.updateUser();
                 }
             },
 
             methods: {
-                enviar() {
-                    alert("Enviado!");
+                updateUser() {
+                    console.log("Usuário atualizado!");
                 }
             }
         });
