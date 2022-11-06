@@ -11,65 +11,60 @@
 </head>
 <body>
 
+    <br><br><br><br>
     <div id="app">
-        <navbar></navbar>
-        <menu-bar :items="[{label: 'Empresas'}, {label: 'Produtos'}]"></menu-bar>
+        <div class="container">
+            <card>
+                <h4 slot="title" class="card-title">Card Title</h4>
+                
+                <template slot="text">
+                    <p class="card-text">Some quick example of a paragraph</p>
+                    <p class="card-text">Some quick example of a paragraph</p>
+                </template>
+                
+                <a  slot="action" href="#" class="btn btn-primary">Go somewhere</a>            
+            </card>
+            
+            <br><hr><br>
+
+            <card>
+                <h4 slot="title" class="card-title">Card Title 2</h4>
+
+                <template slot="text">
+                    <p class="card-text">Some quick example of a paragraph</p>
+                    <p class="card-text">Some quick example of a paragraph</p>
+                </template>
+
+                <a slot="action" href="#" class="btn btn-primary">Read More</a>
+            </card>
+        </div>
     </div>
 
-    <template id="nav">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <menu-bar :items="topNav" @emit-click="getLink"></menu-bar>
+    <template id="card">
+        <div class="card">
+            <img src="https://via.placeholder.com/350x150" class="card-img-top">
+            <div class="card-block">
+                <slot name="title"></slot>
+                <slot name="text"></slot>
+                <slot name="action"></slot>
             </div>
-          </nav>
-    </template>
-
-    <template id="menu">
-        <ul class="navbar-nav">
-            <li v-for="(item, index) in items" class="nav-item active">
-              <a @click.stop.prevent="emitCLick(index)" class="nav-link" href="#">{{ item.label }}</a>
-            </li>
-          </ul>
+        </div>
     </template>
 
 
-    
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     
     <script>
-        Vue.component('navbar', {
-            template: "#nav",
+
+        Vue.component('card', {
+            template: '#card',
             data() {
                 return {
-                    topNav: [{label: 'Home'}, {label: 'Features'}, {label: 'Pricing'}]
-                }
-            },
-
-            methods: {
-                getLink(index) {
-                    alert(this.topNav[index].label)
+                    title: ''
                 }
             }
         })
-        Vue.component('menu-bar', {
-            template: "#menu",
-            props: {
-                items : {
-                    type: Array,
-                    required: true
-                }
-            },
 
-            methods: {
-                emitCLick(index) {
-                    this.$emit('emit-click', index);
-                }
-            }
-        })
         var app = new Vue({
             el: "#app",
             
