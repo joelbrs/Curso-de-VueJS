@@ -32,6 +32,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 
     <script>
 
@@ -41,15 +42,22 @@
                     this.loader.users = true;
 
                     var url = 'http://jsonplaceholder.typicode.com/users'
-                    this.$http.get(url).then(function(response) {
-                        this.users = response.body;
-                    }, function(error) {
-                        this.loader.users = false;
-                        this.response.status = 'error';
-                        console.log(error);
-                    }).finally(function() {
-                        this.loader.users = false;
-                    });
+                    var vm = this;
+
+                    axios.get(url).then(function(response) {
+                        vm.users = response.data;
+                        vm.loader.users = false;
+                    })
+                    
+                    // this.$http.get(url).then(function(response) {
+                    //     this.users = response.body;
+                    // }, function(error) {
+                    //     this.loader.users = false;
+                    //     this.response.status = 'error';
+                    //     console.log(error);
+                    // }).finally(function() {
+                    //     this.loader.users = false;
+                    // });
                 }
             }
         }
