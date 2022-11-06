@@ -11,65 +11,41 @@
 </head>
 <body>
 
-    <br><br><br><br>
     <div id="app">
-        <div class="container">
-            <card>
-                <h4 slot="title" class="card-title">Card Title</h4>
-                
-                <template slot="text">
-                    <p class="card-text">Some quick example of a paragraph</p>
-                    <p class="card-text">Some quick example of a paragraph</p>
-                </template>
-                
-                <a  slot="action" href="#" class="btn btn-primary">Go somewhere</a>            
-            </card>
-            
-            <br><hr><br>
-
-            <card>
-                <h4 slot="title" class="card-title">Card Title 2</h4>
-
-                <template slot="text">
-                    <p class="card-text">Some quick example of a paragraph</p>
-                    <p class="card-text">Some quick example of a paragraph</p>
-                </template>
-
-                <a slot="action" href="#" class="btn btn-primary">Read More</a>
-            </card>
-        </div>
+        <h1>{{titulo}}</h1>
+        <button @click.stop.prevent="getUsers()">GET USERS</button>
     </div>
-
-    <template id="card">
-        <div class="card">
-            <img src="https://via.placeholder.com/350x150" class="card-img-top">
-            <div class="card-block">
-                <slot name="title"></slot>
-                <slot name="text"></slot>
-                <slot name="action"></slot>
-            </div>
-        </div>
-    </template>
 
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     
     <script>
 
-        Vue.component('card', {
-            template: '#card',
-            data() {
-                return {
-                    title: ''
+        var mixin = {
+            methods: {
+                getUsers() {
+                    // rotina de programação 
+                    // localizar usuários
+                    console.log('get users from mixin');
                 }
             }
-        })
+        }
 
         var app = new Vue({
             el: "#app",
+
+            mixins: [mixin],
             
             data: {
                 titulo: "Aulas - VueJS",
+            },
+
+            methods: {
+                getUsers() {
+                    // rotina de programação 
+                    // localizar usuários
+                    console.log('get users from vue');
+                }
             }
         });
     </script>
