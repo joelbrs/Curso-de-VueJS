@@ -12,21 +12,44 @@
 <body>
 
     <div id="app">
-        <h1>{{titulo}}</h1>
-        <button @click.stop.prevent="getUsers()">GET USERS</button>
+        
+        <div class="container">
+            <h1>{{titulo}}</h1>
+            <button @click.stop.prevent="getUsers()">GET USERS</button>
+        
+            <div v-if="response.status == 'error'" class="alert alert-danger">{{response.msg}}</div>
+            
+            <div v-if="this.loader.users == true" class="">Carregando Usuários...</div>
+            
+            <ul>
+                <li v-for="user in users">{{user.name}}</li>
+            </ul>
+
+        </div>
+        
     </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
+
     <script>
 
         var mixin = {
             methods: {
                 getUsers() {
-                    // rotina de programação 
-                    // localizar usuários
-                    console.log('get users from mixin');
+                    this.loader.users = true;
+
+                    var url = 'http://jsonplaceholder.typicode.com/users'
+                    this.$http.get(url).then(function(response) {
+                        this.users = response.body;
+                    }, function(error) {
+                        this.loader.users = false;
+                        this.response.status = 'error';
+                        console.log(error);
+                    }).finally(function() {
+                        this.loader.users = false;
+                    });
                 }
             }
         }
@@ -38,15 +61,16 @@
             
             data: {
                 titulo: "Aulas - VueJS",
-            },
-
-            methods: {
-                getUsers() {
-                    // rotina de programação 
-                    // localizar usuários
-                    console.log('get users from vue');
+                users: [],
+                loader: {
+                    users: false
+                },
+                response: {
+                    msg : '404 - Página não encontrada',
+                    status: ''
                 }
             }
+
         });
     </script>
 </body>
