@@ -23,15 +23,15 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <menu-bar :items="topNav"></menu-bar>
+                <menu-bar :items="topNav" @emit-click="getLink"></menu-bar>
             </div>
           </nav>
     </template>
 
     <template id="menu">
         <ul class="navbar-nav">
-            <li v-for="item in items" class="nav-item active">
-              <a class="nav-link" href="#">{{ item.label }}</a>
+            <li v-for="(item, index) in items" class="nav-item active">
+              <a @click.stop.prevent="emitCLick(index)" class="nav-link" href="#">{{ item.label }}</a>
             </li>
           </ul>
     </template>
@@ -47,6 +47,12 @@
                 return {
                     topNav: [{label: 'Home'}, {label: 'Features'}, {label: 'Pricing'}]
                 }
+            },
+
+            methods: {
+                getLink(index) {
+                    alert(this.topNav[index].label)
+                }
             }
         })
         Vue.component('menu-bar', {
@@ -55,6 +61,12 @@
                 items : {
                     type: Array,
                     required: true
+                }
+            },
+
+            methods: {
+                emitCLick(index) {
+                    this.$emit('emit-click', index);
                 }
             }
         })
