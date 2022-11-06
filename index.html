@@ -1,85 +1,75 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    
-    <title>Aulas - VueJS</title>
-
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>VueJs - Teste</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
 </head>
 <body>
+	
+	<div id="app">
+		<br><br>
+		<div class="container">
+			<h4>{{title}}</h4>
 
-    <div id="app">
-        
-        <div class="container">
-            <h1>{{titulo}}</h1>
-            <button @click.stop.prevent="getUsers()">GET USERS</button>
-        
-            <div v-if="response.status == 'error'" class="alert alert-danger">{{response.msg}}</div>
-            
-            <div v-if="this.loader.users == true" class="">Carregando Usuários...</div>
-            
             <ul>
-                <li v-for="user in users">{{user.name}}</li>
+                <li><router-link to="/transformers">Transformers</router-link></li>
+                <li><router-link to="/game-of-thrones">Game of Thrones</router-link></li>
             </ul>
 
-        </div>
-        
-    </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-
-    <script>
-
-        var mixin = {
-            methods: {
-                getUsers() {
-                    this.loader.users = true;
-
-                    var url = 'http://jsonplaceholder.typicode.com/users'
-                    var vm = this;
-
-                    axios.get(url).then(function(response) {
-                        vm.users = response.data;
-                        vm.loader.users = false;
-                    })
-                    
-                    // this.$http.get(url).then(function(response) {
-                    //     this.users = response.body;
-                    // }, function(error) {
-                    //     this.loader.users = false;
-                    //     this.response.status = 'error';
-                    //     console.log(error);
-                    // }).finally(function() {
-                    //     this.loader.users = false;
-                    // });
-                }
-            }
-        }
-
-        var app = new Vue({
-            el: "#app",
-
-            mixins: [mixin],
+            <router-view></router-view>
             
-            data: {
-                titulo: "Aulas - VueJS",
-                users: [],
-                loader: {
-                    users: false
-                },
-                response: {
-                    msg : '404 - Página não encontrada',
-                    status: ''
-                }
-            }
+        </div>	
+	</div>
+	
+	<template id="transformers">
+		<div>
+			<h3>Transformers</h3>
+			<ul>
+				<li>Bumblebee</li>
+				<li>Optimus Prime</li>
+				<li>Relâmpago Marquinhos</li>
+			</ul>
+		</div>
+	</template>
 
+	<template id="gameOfThrones">
+		<div>
+			<h3>Game Of Thrones</h3>
+			<ul>
+				<li>Jon Snow</li>
+				<li>Daenerys Targaryen</li>
+				<li>Cersei Lannister</li>
+			</ul>
+		</div>
+	</template>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+	
+	<script>
+        let GameOfThrones = Vue.component('game-of-thrones', {
+            template: "#gameOfThrones"
         });
-    </script>
+
+        let Transformers = Vue.component('transformers', {
+            template: "#transformers"
+        });
+
+		let router = new VueRouter({
+            routes: [
+                { path: '/transformers', component: Transformers },
+                { path: '/game-of-thrones', component: GameOfThrones}
+            ]
+        });
+		var app = new Vue ({
+			el: "#app",
+			router,
+			data: {
+				title: "VueJS do jeito ninja!",
+				movie: ""
+			}
+		});
+	</script> 
 </body>
 </html>
