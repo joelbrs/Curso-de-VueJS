@@ -13,12 +13,12 @@
 			<h4>{{title}}</h4>
 
             <ul>
-                <li><router-link to="/transformers">Transformers</router-link></li>
-                <li><router-link to="/game-of-thrones">Game of Thrones</router-link></li>
+                <li><router-link :to="{ name: 'transformers' }">Transformers</router-link></li>
+                <li><router-link :to="{ name: 'game-of-thrones' }">Game of Thrones</router-link></li>
             </ul>
 
             <router-view></router-view>
-            
+
         </div>	
 	</div>
 	
@@ -48,23 +48,25 @@
 	<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
 	
 	<script>
+
         let GameOfThrones = Vue.component('game-of-thrones', {
-            template: "#gameOfThrones"
-        });
+            template: '#gameOfThrones'
+        })
 
         let Transformers = Vue.component('transformers', {
-            template: "#transformers"
-        });
+            template: '#transformers'
+        })
 
-		let router = new VueRouter({
+        let router = new VueRouter({
             routes: [
-                { path: '/transformers', component: Transformers },
-                { path: '/game-of-thrones', component: GameOfThrones}
+                { path: '/transformers', name: 'transformers', component: Transformers },
+                { path: '/game-of-thrones', name: 'game-of-thrones', component: GameOfThrones }
             ]
         });
+
 		var app = new Vue ({
 			el: "#app",
-			router,
+            router,
 			data: {
 				title: "VueJS do jeito ninja!",
 				movie: ""
