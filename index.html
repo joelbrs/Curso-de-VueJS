@@ -28,6 +28,11 @@
 	<template id="transformers">
 		<div>
 			<div class="row">
+
+                <div v-if="sidebar" class="col">
+                    <p>SideBar</p>
+                </div>
+
 				<div class="col">
 					<h3>Transformers</h3>
 					<ul>
@@ -71,6 +76,9 @@
 	<script>
 		let Transformers = Vue.component("transformers", {
 			template: "#transformers",
+            props: {
+                sidebar: Boolean
+            },
 			data() {
 				return {
 					transformers: [
@@ -108,6 +116,9 @@
             },
 			{
 				path: "/transformers", name: "transformers", component: Transformers,
+                props: {
+                    sidebar: true
+                },
 				children: [
 				{
 					path: ":name", name: "transformers-content", component: TransformersContent
