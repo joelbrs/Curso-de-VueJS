@@ -12,24 +12,32 @@
 		<div class="container">
 			<h4>{{title}}</h4>
 
-            <ul>
-                <li><router-link :to="{ name: 'transformers' }">Transformers</router-link></li>
-                <li><router-link :to="{ name: 'game-of-thrones' }">Game of Thrones</router-link></li>
-            </ul>
+			<ul>
+				<li><router-link :to="{name: 'transformers'}">Transformers</router-link></li>
+				<li><router-link :to="{name: 'game-of-thrones'}">Game Of Thrones</router-link></li>
+			</ul>
 
-            <router-view></router-view>
-
-        </div>	
+			<router-view></router-view>
+			
+			<component :is="movie"></component>
+		</div>	
 	</div>
 	
 	<template id="transformers">
 		<div>
-			<h3>Transformers</h3>
-			<ul>
-				<li>Bumblebee</li>
-				<li>Optimus Prime</li>
-				<li>Relâmpago Marquinhos</li>
-			</ul>
+			<div class="row">
+				<div class="col">
+					<h3>Transformers</h3>
+					<ul>
+						<li v-for="item in transformers">
+							<router-link :to="{name: 'transformers-content', params: {name: item.slug}}">{{item.name}}</router-link>
+						</li>
+					</ul>
+				</div>
+				<div class="col">
+					<router-view></router-view>
+				</div>
+			</div>
 		</div>
 	</template>
 
@@ -37,41 +45,72 @@
 		<div>
 			<h3>Game Of Thrones</h3>
 			<ul>
-				<li>Jon Snow</li>
-				<li>Daenerys Targaryen</li>
-				<li>Cersei Lannister</li>
+				<li v-for="item in gameOfThrones">{{item.name}}</li>
 			</ul>
+		</div>
+	</template>
+
+	<template id="transformersContent">
+		<div>
+			<h3>Conteúdo Transformers</h3>
+			{{$route.params.name}}
 		</div>
 	</template>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
-	
 	<script>
-
-        let GameOfThrones = Vue.component('game-of-thrones', {
-            template: '#gameOfThrones'
-        })
-
-        let Transformers = Vue.component('transformers', {
-            template: '#transformers'
-        })
-
-        let router = new VueRouter({
-            routes: [
-                { path: '/transformers', name: 'transformers', component: Transformers },
-                { path: '/game-of-thrones', name: 'game-of-thrones', component: GameOfThrones }
-            ]
-        });
-
+		let Transformers = Vue.component("transformers", {
+			template: "#transformers",
+			data() {
+				return {
+					transformers: [
+					{name: "Optimus Prime", slug: "optimus-prime"},
+					{name: "Bumblebee", slug: "bumblebee"},
+					{name: "Megatron", slug: "megatron"}
+					]
+				}
+			}
+		});
+		let GameOfThrones = Vue.component("game-of-thrones", {
+			template: "#gameOfThrones",
+			data() {
+				return {
+					gameOfThrones: [
+					{name: "Jon Snow"},
+					{name: "Daenerys Targaryen"},
+					{name: "Cersei Lannister"}
+					]
+				}
+			}
+		});
+		let TransformersContent = Vue.component("transformers-content", {
+			template: "#transformersContent"
+		});
+		let router = new VueRouter({
+			mode: "history",
+			routes: [
+			{
+				path: "/transformers", name: "transformers", component: Transformers,
+				children: [
+				{
+					path: ":name", name: "transformers-content", component: TransformersContent
+				}
+				]
+			},
+			{
+				path : "/game-of-thrones", name: "game-of-thrones", component: GameOfThrones
+			}
+			]
+		});
 		var app = new Vue ({
 			el: "#app",
-            router,
+			router,
 			data: {
 				title: "VueJS do jeito ninja!",
 				movie: ""
 			}
 		});
-	</script> 
+	</script>
 </body>
 </html>
